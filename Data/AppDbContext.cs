@@ -13,20 +13,24 @@ using netcore.Modules.Tasks;
 //         public DbSet<TaskModel> Tasks { get; set; }
 //     }
 // }
-public class AppDbContext : DbContext
+
+namespace netcore.Data  
 {
-    public AppDbContext(DbContextOptions<AppDbContext> options)
-        : base(options) { }
-
-    public DbSet<UserModel> Users { get; set; }
-    public DbSet<TaskModel> Tasks { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    public class AppDbContext : DbContext
     {
-        base.OnModelCreating(modelBuilder);
+        public AppDbContext(DbContextOptions<AppDbContext> options)
+            : base(options) { }
 
-        // Force exact table names to match your Controller/Service logic
-        modelBuilder.Entity<UserModel>().ToTable("Users");
-        modelBuilder.Entity<TaskModel>().ToTable("Tasks");
+        public DbSet<UserModel> Users { get; set; }
+        public DbSet<TaskModel> Tasks { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Force exact table names to match your Controller/Service logic
+            modelBuilder.Entity<UserModel>().ToTable("Users");
+            modelBuilder.Entity<TaskModel>().ToTable("Tasks");
+        }
     }
 }
