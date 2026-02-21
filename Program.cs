@@ -68,6 +68,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+
 // 3. AUTO-MIGRATE: Create tables on startup if they don't exist
 using (var scope = app.Services.CreateScope())
 {

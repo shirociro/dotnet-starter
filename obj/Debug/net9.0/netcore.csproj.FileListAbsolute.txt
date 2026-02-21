@@ -121,3 +121,10 @@ C:\projects\central\netcore\obj\Debug\net9.0\refint\netcore.dll
 C:\projects\central\netcore\obj\Debug\net9.0\netcore.pdb
 C:\projects\central\netcore\obj\Debug\net9.0\netcore.genruntimeconfig.cache
 C:\projects\central\netcore\obj\Debug\net9.0\ref\netcore.dll
+C:\projects\central\netcore\bin\Debug\net9.0\ou\web.config
+C:\projects\central\netcore\bin\Debug\net9.0\ou\appsettings.Development.json
+C:\projects\central\netcore\bin\Debug\net9.0\ou\appsettings.json
+C:\projects\central\netcore\bin\Debug\net9.0\ou\netcore.deps.json
+C:\projects\central\netcore\bin\Debug\net9.0\ou\netcore.runtimeconfig.json
+C:\projects\central\netcore\bin\Debug\net9.0\ou\netcore.staticwebassets.endpoints.json
+C:\projects\central\netcore\obj\Debug\net9.0\netcore.sourcelink.json
