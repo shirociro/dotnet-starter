@@ -76,7 +76,7 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     try
     {
-        var context = services.GetRequiredService<YourDbContextName>(); // Change to your actual context name
+        var context = services.GetRequiredService<AppDbContext>(); // Change to your actual context name
         if (context.Database.GetPendingMigrations().Any())
         {
             context.Database.Migrate();
