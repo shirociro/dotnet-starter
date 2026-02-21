@@ -1,0 +1,106 @@
+# =====================
+# .NET Core / ASP.NET Core
+# =====================
+
+## Build outputs
+bin/
+obj/
+out/
+publish/
+
+## Rider / JetBrains
+.idea/
+*.DotSettings.user
+
+## Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.pidb
+*.svclog
+
+## VS Code
+.vscode/
+.history/
+*.code-workspace
+
+## NuGet packages
+*.nupkg
+*.snupkg
+packages/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## Logs
+*.log
+*.tlog
+
+## Debug / profiling files
+*.vsp
+*.vspx
+*.sap
+
+## Test results
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+*.testsettings
+*.vsmdi
+*.testmetadata
+*.ncrunch*
+*.localhistory/
+
+## ASP.NET Core files
+wwwroot/
+appsettings.Development.json
+appsettings.Local.json
+*.db
+*.sqlite
+*.mdb
+
+## Secrets / credentials
+.env
+*.key
+*.pfx
+*.pem
+
+## User-specific
+*.swp
+*.bak
+*.orig
+*.rej
+
+## Optional: JetBrains Rider caches
+.idea/
+*.iml
+
+# =====================
+# Specific to your modules
+# =====================
+Modules/**/bin/
+Modules/**/obj/
+
+# Ignore migrations (optional if you want to track schema)
+Modules/**/Migrations/bin/
+Modules/**/Migrations/obj/
+
+# =====================
+# Optional OS files
+# =====================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
