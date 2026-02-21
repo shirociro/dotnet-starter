@@ -1,33 +1,3 @@
-// using Microsoft.EntityFrameworkCore;
-// using netcore.Data;
-// using netcore.Modules.Users;
-// using netcore.Modules.Tasks;
-
-// var builder = WebApplication.CreateBuilder(args);
-
-// // Add services
-// builder.Services.AddControllers();
-
-// builder.Services.AddDbContext<AppDbContext>(options =>
-//     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-// builder.Services.AddScoped<UserService>();
-// builder.Services.AddScoped<TaskService>();
-
-// builder.Services.AddEndpointsApiExplorer();
-// builder.Services.AddSwaggerGen();
-
-// var app = builder.Build();
-
-// app.UseSwagger();
-// app.UseSwaggerUI();
-
-// app.UseHttpsRedirection();
-// app.UseAuthorization();
-
-// app.MapControllers();
-
-// app.Run();
 using Microsoft.EntityFrameworkCore;
 using netcore.Data;
 using netcore.Modules.Users;
@@ -49,9 +19,9 @@ if (!string.IsNullOrEmpty(databaseUrl))
 }
 else
 {
-    // Fallback for local development (uses your appsettings.json)
+    // Fallback for local development
     connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
-                       ?? "Host=localhost;Database=testdb;Username=postgres;Password=password";
+                        ?? "Host=localhost;Database=testdb;Username=postgres;Password=password";
 }
 
 // Add services
@@ -69,16 +39,22 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-
-// 3. AUTO-MIGRATE: Create tables on startup if they don't exist
+// 3. AUTO-MIGRATE: The "Clean Slate" Version
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     try
     {
         var context = services.GetRequiredService<AppDbContext>();
+        
+        // --- THE RESET FIX ---
+        // This clears the "history" table that's blocking your new table creation
+        // Note: You can remove the 'EnsureDeleted' line after the first successful run
+        Console.WriteLine("--> Wiping database for a clean start...");
+        context.Database.EnsureDeleted(); 
+        
         context.Database.Migrate();
-        Console.WriteLine("--> Database migration successful!");
+        Console.WriteLine("--> Database migration successful! Tables created.");
     }
     catch (Exception ex)
     {
@@ -89,7 +65,7 @@ using (var scope = app.Services.CreateScope())
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection(); // Keep disabled if testing with raw HTTP curl
 app.UseAuthorization();
 
 app.MapControllers();
