@@ -39,28 +39,28 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// 3. AUTO-MIGRATE: The "Clean Slate" Version
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    try
-    {
-        var context = services.GetRequiredService<AppDbContext>();
+// // 3. AUTO-MIGRATE: The "Clean Slate" Version
+// using (var scope = app.Services.CreateScope())
+// {
+//     var services = scope.ServiceProvider;
+//     try
+//     {
+//         var context = services.GetRequiredService<AppDbContext>();
         
-        // --- THE RESET FIX ---
-        // This clears the "history" table that's blocking your new table creation
-        // Note: You can remove the 'EnsureDeleted' line after the first successful run
-        Console.WriteLine("--> Wiping database for a clean start...");
-        context.Database.EnsureDeleted(); 
+//         // --- THE RESET FIX ---
+//         // This clears the "history" table that's blocking your new table creation
+//         // Note: You can remove the 'EnsureDeleted' line after the first successful run
+//         Console.WriteLine("--> Wiping database for a clean start...");
+//         context.Database.EnsureDeleted(); 
         
-        context.Database.Migrate();
-        Console.WriteLine("--> Database migration successful! Tables created.");
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"--> Migration Error: {ex.Message}");
-    }
-}
+//         context.Database.Migrate();
+//         Console.WriteLine("--> Database migration successful! Tables created.");
+//     }
+//     catch (Exception ex)
+//     {
+//         Console.WriteLine($"--> Migration Error: {ex.Message}");
+//     }
+// }
 
 app.UseSwagger();
 app.UseSwaggerUI();
@@ -70,4 +70,22 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<YourDbContextName>(); // Change to your actual context name
+        if (context.Database.GetPendingMigrations().Any())
+        {
+            context.Database.Migrate();
+        }
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while migrating the database.");
+    }
+}
 app.Run();
