@@ -39,33 +39,21 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// // 3. AUTO-MIGRATE: The "Clean Slate" Version
-// using (var scope = app.Services.CreateScope())
-// {
-//     var services = scope.ServiceProvider;
-//     try
-//     {
-//         var context = services.GetRequiredService<AppDbContext>();
-        
-//         // --- THE RESET FIX ---
-//         // This clears the "history" table that's blocking your new table creation
-//         // Note: You can remove the 'EnsureDeleted' line after the first successful run
-//         Console.WriteLine("--> Wiping database for a clean start...");
-//         context.Database.EnsureDeleted(); 
-        
-//         context.Database.Migrate();
-//         Console.WriteLine("--> Database migration successful! Tables created.");
-//     }
-//     catch (Exception ex)
-//     {
-//         Console.WriteLine($"--> Migration Error: {ex.Message}");
-//     }
-// }
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:5173") // Your React URL
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
 
 app.UseSwagger();
 app.UseSwaggerUI();
 
-// app.UseHttpsRedirection(); // Keep disabled if testing with raw HTTP curl
+app.UseCors("AllowFrontend");
 app.UseAuthorization();
 
 app.MapControllers();
@@ -76,7 +64,7 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     try
     {
-        var context = services.GetRequiredService<AppDbContext>(); // Change to your actual context name
+        var context = services.GetRequiredService<AppDbContext>();
         if (context.Database.GetPendingMigrations().Any())
         {
             context.Database.Migrate();
