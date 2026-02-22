@@ -26,5 +26,26 @@ namespace netcore.Modules.Tasks
             var task = await _service.CreateAsync(dto);
             return Ok(task);
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateTask(Guid id, TaskUpdateDto dto)
+        {
+            // Use the ID from the URL to ensure we update the right record
+            var updatedTask = await _service.UpdateAsync(id, dto);
+            
+            if (updatedTask == null) return NotFound();
+            
+            return Ok(updatedTask);
+        }
+        
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteTask(Guid id)
+        {
+            var result = await _service.DeleteAsync(id);
+            
+            if (!result) return NotFound();
+
+            return NoContent(); // Returns 204 (Successful delete, no content to return)
+        }
     }
 }

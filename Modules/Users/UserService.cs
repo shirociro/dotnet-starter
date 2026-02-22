@@ -29,5 +29,27 @@ namespace netcore.Modules.Users
             await _context.SaveChangesAsync();
             return user;
         }
+
+        public async Task<User?> UpdateAsync(Guid id, UserUpdateDto dto)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user == null) return null;
+
+            user.Username = dto.Username;
+            user.Email = dto.Email;
+
+            await _context.SaveChangesAsync();
+            return user;
+        }
+
+        public async Task<bool> DeleteAsync(Guid id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user == null) return false;
+
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

@@ -22,12 +22,37 @@ namespace netcore.Modules.Tasks
             var task = new TaskModel
             {
                 Title = dto.Title,
+                IsCompleted = dto.IsCompleted,
                 UserId = dto.UserId
+
             };
 
             _context.Tasks.Add(task);
             await _context.SaveChangesAsync();
             return task;
+        }
+
+        public async Task<TaskModel?> UpdateAsync(Guid id, TaskCreateDto dto)
+        {
+            var task = await _context.Tasks.FindAsync(id);
+            if (task == null) return null;
+
+            task.Title = dto.Title;
+            task.IsCompleted = dto.IsCompleted;
+            task.UserId = dto.UserId;
+
+            await _context.SaveChangesAsync();
+            return task;
+        }
+
+        public async Task<bool> DeleteAsync(Guid id)
+        {
+            var task = await _context.Tasks.FindAsync(id);
+            if (task == null) return false;
+
+            _context.Tasks.Remove(task);
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

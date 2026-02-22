@@ -16,12 +16,8 @@ namespace netcore.Modules.Users
         [Required]
         [EmailAddress] // Adds automatic validation
         public string Email { get; set; } = string.Empty;
-
-        /// <summary>
-        /// This is the "Navigation Property".
-        /// [JsonIgnore] breaks the infinite loop: User -> Tasks -> User -> Tasks...
-        /// </summary>
-        [JsonIgnore] 
-        public List<TaskModel>? Tasks { get; set; } = new(); 
+       
+        // [JsonIgnore] 
+        // public List<TaskModel>? Tasks { get; set; } = new(); 
     }
 }

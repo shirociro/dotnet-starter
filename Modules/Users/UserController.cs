@@ -26,5 +26,21 @@ namespace netcore.Modules.Users
             var user = await _service.CreateAsync(dto);
             return Ok(user);
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser(Guid id, UserUpdateDto dto)
+        {
+            var updatedUser = await _service.UpdateAsync(id, dto);
+            if (updatedUser == null) return NotFound();
+            return Ok(updatedUser);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(Guid id)
+        {
+            var result = await _service.DeleteAsync(id);
+            if (!result) return NotFound();
+            return NoContent();
+        }
     }
 }
