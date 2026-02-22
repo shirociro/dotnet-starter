@@ -13,9 +13,8 @@ namespace netcore.Modules.Users
         [MaxLength(50)] // Good for Postgres performance
         public string Username { get; set; } = string.Empty;
 
-        [Required]
         [DataType(DataType.Password)] // Tells UI/ORM this is a password field
-        public string Password { get; set; } = string.Empty;
+        public string? Password { get; set; } 
 
         [EmailAddress] // Adds automatic validation
         public string Email { get; set; } = string.Empty;
