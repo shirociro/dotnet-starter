@@ -5,13 +5,11 @@ using netcore.Modules.Tasks;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1. DATABASE LOGIC: Handle Render's postgres:// URL
 var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 string connectionString;
 
 if (!string.IsNullOrEmpty(databaseUrl))
 {
-    // Convert Render's postgres:// format to Npgsql format
     var uri = new Uri(databaseUrl);
     var userInfo = uri.UserInfo.Split(':');
     var port = uri.Port <= 0 ? 5432 : uri.Port;
@@ -19,45 +17,45 @@ if (!string.IsNullOrEmpty(databaseUrl))
 }
 else
 {
-    // Fallback for local development
     connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
                         ?? "Host=localhost;Database=testdb;Username=postgres;Password=password";
 }
 
-// Add services
 builder.Services.AddControllers();
 
-// 2. Use the connectionString we just built
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
 
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<TaskService>();
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-var app = builder.Build();
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend",
         policy =>
         {
-            policy.WithOrigins("http://localhost:5173") // Your React URL
+            policy.WithOrigins("http://localhost:5173") // Local React URL
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });
 });
 
-app.UseSwagger();
-app.UseSwaggerUI();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-app.UseCors("AllowFrontend");
+var app = builder.Build(); 
+
+
+app.UseCors("AllowFrontend"); 
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
 app.UseAuthorization();
-
 app.MapControllers();
-
 
 using (var scope = app.Services.CreateScope())
 {
@@ -76,4 +74,5 @@ using (var scope = app.Services.CreateScope())
         logger.LogError(ex, "An error occurred while migrating the database.");
     }
 }
+
 app.Run();
