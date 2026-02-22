@@ -14,7 +14,10 @@ namespace netcore.Modules.Tasks
 
         public async Task<List<TaskModel>> GetAllAsync()
         {
-            return await _context.Tasks.Include(t => t.User).ToListAsync();
+            return await _context.Tasks
+                .Include(t => t.User)
+                .OrderByDescending(t => t.CreatedAt) 
+                .ToListAsync();
         }
 
         public async Task<TaskModel> CreateAsync(TaskCreateDto dto)

@@ -15,8 +15,11 @@ namespace netcore.Modules.Tasks
 
         public bool IsCompleted { get; set; } = false;
 
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
         [ForeignKey("User")]
         public Guid UserId { get; set; }
+
 
         // The Fix: This stops the serializer from trying to include the 
         // full User object, which prevents the cycle: Task -> User -> Tasks...

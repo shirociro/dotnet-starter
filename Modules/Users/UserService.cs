@@ -14,7 +14,10 @@ namespace netcore.Modules.Users
 
         public async Task<List<UserModel>> GetAllAsync()
         {
-            return await _context.Users.Include(u => u.Tasks).ToListAsync();
+            return await _context.Users
+                .Include(u => u.Tasks)
+                .OrderByDescending(u => u.CreatedAt)
+                .ToListAsync();
         }
 
         public async Task<UserModel> CreateAsync(UserCreateDto dto)

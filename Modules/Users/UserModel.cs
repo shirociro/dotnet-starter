@@ -16,9 +16,11 @@ namespace netcore.Modules.Users
         [DataType(DataType.Password)] // Tells UI/ORM this is a password field
         public string? Password { get; set; } 
 
+        
         [EmailAddress] // Adds automatic validation
         public string Email { get; set; } = string.Empty;
        
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         // [JsonIgnore] 
         public List<TaskModel>? Tasks { get; set; } = new(); 
     }
