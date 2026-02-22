@@ -22,7 +22,7 @@ namespace netcore.Modules.Users
             var user = new UserModel
             {
                 Username = dto.Username,
-                Email = dto.Email
+                Password = dto.Password
             };
 
             _context.Users.Add(user);
@@ -36,7 +36,7 @@ namespace netcore.Modules.Users
             if (user == null) return null;
 
             user.Username = dto.Username;
-            user.Email = dto.Email;
+            user.Password = dto.Password;
 
             await _context.SaveChangesAsync();
             return user;
