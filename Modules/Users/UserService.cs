@@ -30,7 +30,7 @@ namespace netcore.Modules.Users
             return user;
         }
 
-        public async Task<User?> UpdateAsync(Guid id, UserUpdateDto dto)
+        public async Task<UserModel?> UpdateAsync(Guid id, UserCreateDto dto)
         {
             var user = await _context.Users.FindAsync(id);
             if (user == null) return null;

@@ -18,6 +18,6 @@ namespace netcore.Modules.Users
         public string Email { get; set; } = string.Empty;
        
         // [JsonIgnore] 
-        // public List<TaskModel>? Tasks { get; set; } = new(); 
+        public List<TaskModel>? Tasks { get; set; } = new(); 
     }
 }

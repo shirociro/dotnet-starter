@@ -6,6 +6,7 @@ namespace netcore.Modules.Tasks
     {
         [Required]
         public string Title { get; set; } = string.Empty;
+        public bool IsCompleted { get; set; } 
 
         [Required]
         public Guid UserId { get; set; }

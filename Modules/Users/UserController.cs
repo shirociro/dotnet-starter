@@ -28,7 +28,7 @@ namespace netcore.Modules.Users
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(Guid id, UserUpdateDto dto)
+        public async Task<IActionResult> UpdateUser(Guid id, UserCreateDto dto)
         {
             var updatedUser = await _service.UpdateAsync(id, dto);
             if (updatedUser == null) return NotFound();

@@ -28,7 +28,7 @@ namespace netcore.Modules.Tasks
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateTask(Guid id, TaskUpdateDto dto)
+        public async Task<IActionResult> UpdateTask(Guid id, TaskCreateDto dto)
         {
             // Use the ID from the URL to ensure we update the right record
             var updatedTask = await _service.UpdateAsync(id, dto);
@@ -37,7 +37,7 @@ namespace netcore.Modules.Tasks
             
             return Ok(updatedTask);
         }
-        
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTask(Guid id)
         {
