@@ -16,7 +16,7 @@ namespace netcore.Modules.Tasks
         {
             return await _context.Tasks
                 .Include(t => t.User)
-                .OrderByDescending(t => t.CreatedAt) 
+                .OrderBy(t => t.CreatedAt) 
                 .ToListAsync();
         }
 
