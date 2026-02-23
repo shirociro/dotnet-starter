@@ -17,8 +17,8 @@ namespace netcore.Modules.Users
         public string? Password { get; set; } 
 
         
-        [EmailAddress] // Adds automatic validation
-        public string Email { get; set; } = string.Empty;
+        // [EmailAddress] // Adds automatic validation
+        // public string Email { get; set; } = string.Empty;
        
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         // [JsonIgnore] 
