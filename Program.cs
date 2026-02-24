@@ -34,7 +34,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend",
         policy =>
         {
-            policy.WithOrigins("http://localhost:5173","https://dotnet-starter.onrender.com","https://shirociro.github.io","https://react-task-manager-uo5a.onrender.com","https://vue-task-manager-uo5a.onrender.com") // Local React URL
+            policy.WithOrigins("http://localhost:5173","https://dotnet-starter.onrender.com","https://shirociro.github.io","https://react-task-manager-uo5a.onrender.com","https://vue-task-manager-uo5a.onrender.com", "https://vue-projects-nggr.onrender.com") // Local React URL
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });
